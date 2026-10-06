@@ -1,0 +1,16 @@
+/* Extension de la plantilla Traza: no sustituye los estilos de acceso. */
+.ancho-formulario { max-width: 760px; }
+.descripcion-con-saltos { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cabecera-pagina h1, .tarjeta-proyecto h2, .tarjeta-tablero h3 { overflow-wrap: anywhere; }
+.tarjeta-proyecto, .tarjeta-tablero { min-width: 0; }
+.enlace-tablero { overflow-wrap: anywhere; }
+.enlace-tablero > span[data-icono] { flex: 0 0 auto; }
+.tabla-organizacion { min-width: 650px; }
+.tabla-organizacion td { overflow-wrap: anywhere; max-width: 300px; }
+.tabla-organizacion .grupo-en-linea { flex-wrap: nowrap; }
+.kanban-organizacion .columna-kanban { min-height: 360px; }
+@media (max-width: 700px) {
+    .cabecera-pagina { align-items: flex-start; flex-direction: column; }
+    .cabecera-pagina .grupo-en-linea { gap: 8px; }
+    .superficie { padding: 18px; }
+}

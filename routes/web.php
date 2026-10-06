@@ -54,3 +54,5 @@ Route::middleware(['auth', 'cuenta.activa', 'auth.session'])->group(function ():
     Route::get('/tableros/{tablero}', [TableroController::class, 'show'])
         ->whereNumber('tablero')->name('tableros.show');
 });
+
+require __DIR__.'/tareas.php';

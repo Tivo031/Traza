@@ -30,10 +30,15 @@ class TableroController extends Controller
     {
         AccesoOrganizacion::comprobarTablero($request->user(), $tablero);
         $tablero->load(['proyecto', 'columnas' => fn ($columnas) =>
-            $columnas->with('estado')->withCount('tareas')->orderBy('posicion')]);
+            $columnas->with(['estado', 'tareas' => fn ($q) => $q
+                ->with(['prioridad', 'tipo', 'categoria', 'responsable', 'columna.estado'])
+                ->withCount(['subtareas', 'subtareas as subtareas_completadas_count' => fn ($s) => $s->whereNotNull('fecha_finalizacion')])
+                ->withMax('actividades', 'id_actividad')->orderBy('posicion')->orderBy('id_tarea')])
+                ->withCount('tareas')->orderBy('posicion')]);
         $miembrosActivos = $tablero->asignaciones()->where('activo', 1)
             ->whereHas('usuario', fn ($usuarios) => $usuarios->where('activo', 1))->count();
-        return view('tableros.mostrar', compact('tablero', 'miembrosActivos'));
+        $responsables = $tablero->usuarios()->where('usuarios.activo', 1)->wherePivot('activo', 1)->orderBy('nombre')->get();
+        return view('tableros.mostrar', compact('tablero', 'miembrosActivos', 'responsables'));
     }
 
     public function edit(Tablero $tablero): View

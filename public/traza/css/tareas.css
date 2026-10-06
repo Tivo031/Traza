@@ -1,0 +1,16 @@
+/* Extension de la plantilla, sin modificar las pantallas de acceso. */
+.formulario-tarea{max-width:1000px}.formulario-tarea .form-label{font-weight:600}
+.kanban-real .columna-kanban{min-height:460px}.lista-tareas-real{display:flex;flex-direction:column;gap:12px;min-height:360px;padding:3px 0 12px;border-radius:8px}
+.lista-tareas-real.zona-destino{outline:2px dashed #8470cf;outline-offset:3px}
+.tarea-real{transition:box-shadow .15s,border-color .15s}.tarea-real:hover{transform:none}.tarea-real.arrastrando{opacity:.55}
+.tarea-real h3{font-size:14px}.tarea-real .texto-mini{overflow-wrap:anywhere}.tarea-real .grupo-en-linea{flex-wrap:wrap}
+.tarea-real .etiqueta{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.agarrador-tarea{cursor:grab;margin-left:auto!important;touch-action:auto}.agarrador-tarea:active{cursor:grabbing}.agarrador-tarea .icono{pointer-events:none}
+.tarea-vencida{border-left:3px solid #be535f}.avance-tarea{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-top:12px}
+progress{width:100%;height:7px;accent-color:#7962c3;border:0;border-radius:6px}progress::-webkit-progress-bar{background:#eae7f3;border-radius:6px}progress::-webkit-progress-value{background:#7962c3;border-radius:6px}
+.datos-tarea{margin:0}.datos-tarea dt{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#70798d;margin-top:16px}.datos-tarea dd{font-size:14px;margin-bottom:0;overflow-wrap:anywhere}
+.evento-tarea{padding:15px 0;border-bottom:1px solid #eceef4;overflow-wrap:anywhere}.evento-tarea:last-child{border:0}.evento-tarea strong{font-size:13px}
+.subtarea-consulta{border:1px solid #e5e8ef;border-radius:8px;padding:12px}.subtarea-consulta .etiqueta{margin-left:8px}
+.rejilla-detalle>*{min-width:0}.rejilla-detalle h2{font-size:18px}.rejilla-detalle .descripcion-con-saltos{font-size:14px;line-height:1.65}
+#criterio-movimiento{max-height:200px;overflow:auto;background:#f5f4fa;padding:12px;border-radius:8px;font-size:13px}
+@media(max-width:767px){.formulario-tarea{padding:20px}.lista-tareas-real{min-height:300px}.kanban-real .columna-kanban{min-height:420px}.cabecera-pagina .grupo-en-linea{flex-wrap:wrap}}

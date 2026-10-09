@@ -1,0 +1,30 @@
+/* Complemento de la plantilla Traza. No cambia estilos de Auth. */
+#subtareas,#comentarios{scroll-margin-top:24px}
+.cabecera-seguimiento{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cabecera-seguimiento h2,.cabecera-seguimiento h3{margin:0;overflow-wrap:anywhere;min-width:0}
+.cabecera-seguimiento h3{font-size:15px;flex:1}
+.subtarea-edicion{border:1px solid #e5e8ef;border-radius:10px;padding:16px;margin:16px 0;background:#fff}
+.elemento-seguimiento{border-bottom:1px solid #eceef4;padding:10px 0}
+.elemento-seguimiento:last-child{border-bottom:0}
+.fila-elemento{display:flex;gap:10px;align-items:center}
+.texto-elemento{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px}
+.texto-finalizado{text-decoration:line-through;color:#586473}
+.estado-elemento{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #ccd3dc;border-radius:5px;flex-shrink:0}
+.estado-elemento.marcado{background:#e3f2ed;border-color:#8ab8a7;color:#24634e}
+.editor-elemento{margin-top:6px;padding-left:32px}
+.enlace-editor{font-size:13px;color:#6550a8;cursor:pointer;font-weight:600;padding:6px 0}
+.enlace-editor:focus-visible{outline:2px solid #7962c3;outline-offset:4px}
+.editor-seguimiento{padding:12px 0 0;border-top:1px solid #e8ebf1;margin-top:16px}
+.editor-seguimiento.compacto{padding-top:6px;margin-top:10px}
+.acciones-subtarea{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px}
+.campo-orden{max-width:145px}
+.resumen-seguimiento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.indicador-seguimiento{display:flex;flex-direction:column;gap:10px;min-width:0}
+.indicador-seguimiento>span{font-size:14px;font-weight:600;color:#59657b}
+.indicador-seguimiento>strong{font-size:32px;line-height:1.2;font-weight:700}
+.indicador-seguimiento>small{font-size:12px;color:#788397}
+.tabla-panel th:not(:first-child),.tabla-panel td{text-align:center}
+.tabla-panel{min-width:540px;font-size:14px}
+.tabla-panel th:first-child{max-width:350px;overflow-wrap:anywhere;min-width:140px}
+@media(max-width:1050px){.resumen-seguimiento{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:575px){.subtarea-edicion{padding:12px}.fila-elemento{flex-wrap:wrap}.fila-elemento form{margin-left:32px}.texto-elemento{min-width:calc(100% - 35px)}.indicador-seguimiento{padding:15px}.indicador-seguimiento>strong{font-size:27px}}

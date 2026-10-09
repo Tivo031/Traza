@@ -12,7 +12,7 @@
     @endif
 </div>
 @if($proyecto->descripcion)<p class="descripcion-con-saltos texto-secundario">{{ $proyecto->descripcion }}</p>@endif
-<h2 class="mb-3">Tableros disponibles</h2>
+<div class="grupo-en-linea mb-3"><h2 class="mb-0">Tableros disponibles</h2><a class="btn btn-light btn-sm" href="{{ route('panel.show', $proyecto) }}">Panel del proyecto</a></div>
 @if($tableros->isEmpty())
     <section class="superficie vacio"><span data-icono="tablero"></span><h3>Aún no hay tableros</h3><p>Crea el primero para organizar el trabajo de este proyecto.</p></section>
 @else

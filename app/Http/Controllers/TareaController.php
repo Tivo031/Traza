@@ -48,7 +48,7 @@ class TareaController extends Controller
         $tablero = $tarea->columna->tablero;
         AccesoOrganizacion::comprobarTablero($request->user(), $tablero);
         $tarea->load(['columna.estado', 'prioridad', 'tipo', 'categoria', 'creador', 'responsable',
-            'subtareas' => fn ($q) => $q->with('elementos')->orderBy('posicion')->orderBy('id_subtarea')]);
+            'subtareas' => fn ($q) => $q->with(['elementos' => fn ($e) => $e->orderBy('posicion')->orderBy('id_elemento')])->orderBy('posicion')->orderBy('id_subtarea')]);
         $tarea->loadCount(['subtareas', 'subtareas as subtareas_completadas_count' => fn ($q) => $q->whereNotNull('fecha_finalizacion')]);
         $tarea->loadMax('actividades', 'id_actividad');
         $actividades = $tarea->actividades()->with(['actor', 'estadoAnterior', 'estadoNuevo'])

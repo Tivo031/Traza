@@ -56,3 +56,5 @@ Route::middleware(['auth', 'cuenta.activa', 'auth.session'])->group(function ():
 });
 
 require __DIR__.'/tareas.php';
+
+require __DIR__.'/seguimiento.php';

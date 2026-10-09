@@ -6,6 +6,7 @@
 <div class="cabecera-pagina">
     <div><span class="etiqueta-superior">TABLERO DEL EQUIPO</span><h1>{{ $tablero->nombre }}</h1><p>{{ $miembrosActivos }} miembros activos &middot; {{ $tablero->columnas->sum('tareas_count') }} tareas</p></div>
     <div class="grupo-en-linea">
+        <a class="btn btn-light" href="{{ route('panel.show', $tablero->proyecto) }}">Panel del proyecto</a>
         @if(auth()->user()->esAdministrador())<a class="btn btn-light" href="{{ route('tableros.edit', $tablero) }}">Editar tablero</a><a class="btn btn-light" href="{{ route('asignaciones.index', $tablero) }}"><span data-icono="usuarios"></span>Miembros</a>@endif
         <a class="btn btn-primary" href="{{ route('tareas.create', $tablero) }}"><span data-icono="mas"></span>Nueva tarea</a>
     </div>

@@ -150,9 +150,26 @@ class TareasTrazaTest extends CasoTraza
     public function test_enviar_a_revision_solo_responsable(): void
     {
         $t = $this->crear($this->miembro);
-        $this->actingAs($this->admin)->patchJson(route('tareas.mover', $t), $this->movimiento($t, 'EN_REVISION'))->assertUnprocessable();
-        $this->actingAs($this->miembro)->patch(route('tareas.mover', $t), $this->movimiento($t, 'EN_REVISION'))->assertRedirect();
+        $eventosAntes = $t->actividades()->count();
+
+        $this->actingAs($this->admin)
+            ->patchJson(route('tareas.mover', $t), $this->movimiento($t, 'EN_REVISION'))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('tarea');
+        $this->assertSame('EN_PROGRESO', VistaTarea::codigo($t->fresh()));
+        $this->assertSame($eventosAntes, $t->actividades()->count());
+
+        // Simular otra sesion al cambiar de persona. actingAs no vacia la anterior.
+        // Se mantiene auth.session y las reglas de permisos de la aplicacion.
+        $this->flushSession();
+        $this->actingAs($this->miembro)
+            ->patch(route('tareas.mover', $t), $this->movimiento($t, 'EN_REVISION'))
+            ->assertRedirect(route('tableros.show', $this->tablero))
+            ->assertSessionHasNoErrors();
+        $this->assertAuthenticatedAs($this->miembro);
         $this->assertSame('EN_REVISION', VistaTarea::codigo($t->fresh()));
+        $this->assertNull($t->fresh()->fecha_cierre);
+        $this->assertSame($eventosAntes + 1, $t->actividades()->count());
     }
 
     public function test_subtareas_pendientes_bloquean_revision(): void
@@ -174,10 +191,28 @@ class TareasTrazaTest extends CasoTraza
     public function test_miembro_no_aprueba_y_admin_registra_cierre(): void
     {
         $t = $this->ir($this->crear($this->miembro), 'EN_REVISION', $this->miembro);
-        $this->actingAs($this->miembro)->patchJson(route('tareas.mover', $t), $this->movimiento($t, 'COMPLETADO'))->assertUnprocessable();
-        $this->actingAs($this->admin)->patch(route('tareas.mover', $t), $this->movimiento($t, 'COMPLETADO'))->assertRedirect();
-        $t = $t->fresh(); $this->assertSame('COMPLETADO', VistaTarea::codigo($t)); $this->assertNotNull($t->fecha_cierre);
+        $eventosAntes = $t->actividades()->count();
+
+        $this->actingAs($this->miembro)
+            ->patchJson(route('tareas.mover', $t), $this->movimiento($t, 'COMPLETADO'))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('tarea');
+        $this->assertSame('EN_REVISION', VistaTarea::codigo($t->fresh()));
+        $this->assertNull($t->fresh()->fecha_cierre);
+        $this->assertSame($eventosAntes, $t->actividades()->count());
+
+        // El Administrador usa una sesion limpia, no la sesion previa del Miembro.
+        $this->flushSession();
+        $this->actingAs($this->admin)
+            ->patch(route('tareas.mover', $t), $this->movimiento($t, 'COMPLETADO'))
+            ->assertRedirect(route('tableros.show', $this->tablero))
+            ->assertSessionHasNoErrors();
+        $this->assertAuthenticatedAs($this->admin);
+        $t = $t->fresh();
+        $this->assertSame('COMPLETADO', VistaTarea::codigo($t));
+        $this->assertNotNull($t->fecha_cierre);
         $this->assertFalse(VistaTarea::editable($t));
+        $this->assertSame($eventosAntes + 1, $t->actividades()->count());
     }
 
     public function test_no_reabre_ni_edita_completado(): void
